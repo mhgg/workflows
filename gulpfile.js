@@ -5,6 +5,8 @@ var gulp = require('gulp'),
 	browerserify = require('gulp-browserify'),
 	compass = require('gulp-compass'),
 	connect = require('gulp-connect'),
+	gulpif = require('gulp-if'),
+	uglify = require('gulp-uglify'),
 	concat = require('gulp-concat');
 
 var env,
@@ -59,6 +61,7 @@ gulp.task('js', function(){
 		.pipe(concat('script.js'))
 		//add dependancies jquery and mustache
 		.pipe(browerserify())
+		.pipe(gulpif(env === 'production', uglify()))
 		//destination folder for the file
 		.pipe(gulp.dest(outputDir + 'js'))
 		.pipe(connect.reload())
