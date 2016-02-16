@@ -2,6 +2,7 @@
 var gulp   = require('gulp'),
 	gutil  = require('gulp-util'),
 	coffee = require('gulp-coffee'),
+	browerserify = require('gulp-browserify'),
 	concat = require('gulp-concat');
 
 //array for the converting of the coffeescripts
@@ -31,6 +32,7 @@ gulp.task('js', function(){
 	gulp.src(jsSources)
 		//output file
 		.pipe(concat('script.js'))
+		.pipe(browerserify())
 		//destination folder for the file
 		.pipe(gulp.dest('builds/development/js'))
 });
