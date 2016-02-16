@@ -52,5 +52,14 @@ gulp.task('compass', function() {
 		.pipe(gulp.dest('builds/development/css'))
 });
 
+gulp.task('watch', function() {
+	//when any of these files change run coffee
+	gulp.watch(coffeeSources, ['coffee']);
+	//when any of these files change run js
+	gulp.watch(jsSources, ['js']);
+	//when any file changes in the sass folder run compass
+	gulp.watch('components/sass/*.scss', ['compass']);
+});
+
 //default task that runs all tasks in order of the array
 gulp.task('default', ['coffee', 'js', 'compass']);
