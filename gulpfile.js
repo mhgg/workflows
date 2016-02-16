@@ -3,6 +3,7 @@ var gulp   = require('gulp'),
 	gutil  = require('gulp-util'),
 	coffee = require('gulp-coffee'),
 	browerserify = require('gulp-browserify'),
+	compass = require('gulp-compass'),
 	concat = require('gulp-concat');
 
 //array for the converting of the coffeescripts
@@ -15,6 +16,8 @@ var jsSources = [
 	'components/scripts/tagline.js',
 	'components/scripts/template.js',
 ];
+
+var sassSources = ['components/sass/style.scss'];
 
 //created a task named coffee that uses gulp-coffee to process coffeescript to js
 gulp.task('coffee', function() {
@@ -32,7 +35,19 @@ gulp.task('js', function(){
 	gulp.src(jsSources)
 		//output file
 		.pipe(concat('script.js'))
+		//add dependancies jquery and mustache
 		.pipe(browerserify())
 		//destination folder for the file
 		.pipe(gulp.dest('builds/development/js'))
+});
+
+gulp.task('compass', function() {
+	gulp.src(sassSources)
+		.pipe(compass({
+			sass: 'components/sass',
+			image: 'builds/development/images',
+			style: 'expanded'
+		}))
+		.on('error', gutil.log)
+		.pipe(gulp.dest('builds/development/css'))
 });
