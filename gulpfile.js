@@ -62,4 +62,4 @@ gulp.task('watch', function() {
 });
 
 //default task that runs all tasks in order of the array
-gulp.task('default', ['coffee', 'js', 'compass']);
+gulp.task('default', ['coffee', 'js', 'compass', 'watch']);
