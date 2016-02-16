@@ -19,6 +19,8 @@ var jsSources = [
 ];
 
 var sassSources = ['components/sass/style.scss'];
+var htmlSources = ['builds/development/*.html'];
+var jsonSources = ['builds/development/js/*.json'];
 
 //created a task named coffee that uses gulp-coffee to process coffeescript to js
 gulp.task('coffee', function() {
@@ -63,6 +65,8 @@ gulp.task('watch', function() {
 	gulp.watch(jsSources, ['js']);
 	//when any file changes in the sass folder run compass
 	gulp.watch('components/sass/*.scss', ['compass']);
+	gulp.watch(htmlSources, ['html']);
+	gulp.watch(jsonSources, ['json']);
 });
 
 gulp.task('connect', function(){
@@ -73,5 +77,16 @@ gulp.task('connect', function(){
 	});
 });
 
+//watch html task
+gulp.task('html', function(){
+	gulp.src(htmlSources)
+	.pipe(connect.reload())
+});
+
+gulp.task('json', function(){
+	gulp.src(jsonSources)
+	.pipe(connect.reload())
+});
+
 //default task that runs all tasks in order of the array
-gulp.task('default', ['coffee', 'js', 'compass', 'connect', 'watch']);
+gulp.task('default', ['html', 'json', 'coffee', 'js', 'compass', 'connect', 'watch']);
