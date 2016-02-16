@@ -1,10 +1,19 @@
 //include Gulp & plugins
-var gulp = require('gulp'),
-	gutil = require('gulp-util'),
-	coffee = require('gulp-coffee');
+var gulp   = require('gulp'),
+	gutil  = require('gulp-util'),
+	coffee = require('gulp-coffee'),
+	concat = require('gulp-concat');
 
-//variable for the sources of the coffeescripts
+//array for the converting of the coffeescripts
 var coffeeSources = ['components/coffee/tagline.coffee'];
+
+//array for concatenating the js files
+var jsSources = [
+	'components/scripts/rclick.js',
+	'components/scripts/pixgrid.js',
+	'components/scripts/tagline.js',
+	'components/scripts/template.js',
+];
 
 //created a task named coffee that uses gulp-coffee to process coffeescript to js
 gulp.task('coffee', function() {
@@ -16,4 +25,12 @@ gulp.task('coffee', function() {
 			.on('error', gutil.log))
 		//passes on the final destionation of the process
 		.pipe(gulp.dest('components/scripts'))
+});
+
+gulp.task('js', function(){
+	gulp.src(jsSources)
+		//output file
+		.pipe(concat('script.js'))
+		//destination folder for the file
+		.pipe(gulp.dest('builds/development/js'))
 });
