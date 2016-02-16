@@ -4,6 +4,7 @@ var gulp   = require('gulp'),
 	coffee = require('gulp-coffee'),
 	browerserify = require('gulp-browserify'),
 	compass = require('gulp-compass'),
+	connect = require('gulp-connect'),
 	concat = require('gulp-concat');
 
 //array for the converting of the coffeescripts
@@ -39,6 +40,7 @@ gulp.task('js', function(){
 		.pipe(browerserify())
 		//destination folder for the file
 		.pipe(gulp.dest('builds/development/js'))
+		.pipe(connect.reload())
 });
 
 gulp.task('compass', function() {
@@ -50,6 +52,8 @@ gulp.task('compass', function() {
 		}))
 		.on('error', gutil.log)
 		.pipe(gulp.dest('builds/development/css'))
+		//reload auto when change happens
+		.pipe(connect.reload())
 });
 
 gulp.task('watch', function() {
@@ -61,5 +65,13 @@ gulp.task('watch', function() {
 	gulp.watch('components/sass/*.scss', ['compass']);
 });
 
+gulp.task('connect', function(){
+	//sets up local server
+	connect.server({
+		root: 'builds/development/',
+		livereload: true
+	});
+});
+
 //default task that runs all tasks in order of the array
-gulp.task('default', ['coffee', 'js', 'compass', 'watch']);
+gulp.task('default', ['coffee', 'js', 'compass', 'connect', 'watch']);
